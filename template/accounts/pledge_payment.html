@@ -1,0 +1,112 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class='row'>
+    <div class="col-md-3 col-sm-12">
+    
+        <!-- Profile Image -->
+        <div class="card card-dark card-outline">
+            <div class="card-body box-profile">
+                <div class="text-center mb-2">
+                    <img class="profile-user-img img-fluid img-circle" src="{% static 'dist/img/logo6.jpeg' %}"
+                        alt="User profile picture">
+                </div>
+               
+    
+                {% comment %} <h3 class="profile-username text-center">{{{ pledge.description }}</h3> {% endcomment %}
+                <ul class="list-group list-group-unbordered mb-3">
+                    <li class="list-group-item">
+                        <b>Code</b> <a class="float-right">{{pledge.sub_code}}</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Discription</b> <a class="float-right">{{pledge.description}}</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Total </b> <a class="float-right">{{pledge.amount}}</a>
+                    </li>
+                    <li class="list-group-item">
+                        {% if pledge.status == "pending" %}
+                            <b>Status </b> <a class="float-right"><span class="badge badge-pill badge-warning">{{pledge.status}}</span></a>
+                        {% elif pledge.status == "approved" %}
+                            <b>Status </b> <a class="float-right"><span class="badge badge-pill badge-info">{{pledge.status}}</span></a>
+                        {% else %}
+                            <b>Status </b> <a class="float-right"><span class="badge badge-pill badge-info">{{pledge.status}}</span></a>
+                        {% endif %}
+                    </li>
+                    {% if pledge.status == "pending" %}
+                        <li class="list-group-item">
+                            <a class="btn btn-block btn-outline-primary" href="{% url 'accounts:approve_pledge' pledge.id %}">Approve Pledge</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a class="btn btn-block btn-outline-danger" href="{% url 'accounts:cancelled_pledge' pledge.id %}">Cancel Pledge</a>
+                        </li>
+                    {% else %}
+                    {% endif %}
+
+                </ul>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    
+       
+       
+    </div>
+    <div class="col-md-9 col-sm-12 novalidate">
+        
+        <div class="row">
+                    <div class="col-lg">
+                        <div class="card card-dark card-outline">
+                            <div class="card-header">
+                                <h3 class="card-title">{{pledge.description}}</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+                            <form role="form" method="POST" enctype="multipart/form-data" novalidate>
+                                {% csrf_token %}
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="form-group  col-12 col-md-8">
+                                          <label for="">Account Code </label>
+                                           {{form.sub_code|as_crispy_field}}
+                                        </div>
+                                        <div class="form-group col-12 col-sm-12 col-md-4">
+                                            <label for="">Amount </label>
+                                            {{ form.amount_paid|as_crispy_field }}
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                    
+                                    
+                                    <div class="row">
+                                        <div class="form-group col">
+                                            <button type="submit" class="btn btn-outline-dark btn-sm">Submit</button>
+                                        </div>
+                                       
+                                        
+                                    </div>
+                                </div> 
+                                
+                                    
+                            </form>
+
+                            <br>
+                            
+                            
+                        </div>
+                   </div>           
+    
+        </div>
+    
+    </div>
+
+</div>
+{% endblock %}
+
+
+

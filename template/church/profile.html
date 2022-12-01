@@ -1,0 +1,279 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block head %}
+{% if bio.surname %}{{ bio.surname }}{% endif %} {% if bio.first_name %} {{ bio.first_name }}{% endif %}{% if bio.other_name %}{{ bio.other_name }}
+{% endif %}
+{% endblock head %}
+
+{% block breadcrumb %}
+
+    <li class="breadcrumb-item"><a href="#">Home</a></li>
+
+    <li class="breadcrumb-item"><a href="{% url 'church:manage_members' %}">Members</a></li>
+    <li class="breadcrumb-item active">{% if bio.surname %}{{ bio.surname }}{% endif %} {% if bio.first_name %} {{ bio.first_name }}{% endif %}{% if bio.other_name %}{{ bio.other_name }}
+        {% endif %}</li>
+{% endblock breadcrumb %}
+
+{% block content %}
+<div class="content ">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 col-sm-12">
+
+                <!-- Profile Image -->
+                <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
+                        <div class="text-center">
+                            <img class="profile-user-img img-fluid img-circle" src=" {{bio.profile_picture.url}}"
+                                alt="User profile picture">
+                        </div>
+
+                        <h3 class="profile-username text-center">{% if bio.surname %}{{ bio.surname }}{% endif %} {% if bio.first_name %} {{ bio.first_name }}{% endif %}{% if bio.other_name %}{{ bio.other_name }}
+                            {% endif %}</h3>
+                        <ul class="list-group list-group-unbordered mb-3">
+                            <li class="list-group-item">
+                                <b>Date Of Birth</b> <a class="float-right">{{bio.dob}}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Age</b> <a class="float-right">{{bio.age}}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Gender</b> <a class="float-right">{{bio.gender}}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Marital Status</b> <a class="float-right">{{bio.marital_status}}</a>
+                            </li>
+                            <li class="list-group-item">
+                                {% if bio.status == "New" %}
+                                    <b>Membership Status</b> <span class="badge badge-pill badge-warning float-right">{{ bio.status }}</span>
+                                {% elif bio.status == "Foundation Class" %}
+                                    <b>Membership Status</b> <span class="badge badge-pill badge-info float-right">{{ bio.status }}</span>
+                                {% elif bio.status == "Member" %}
+                                    <b>Membership Status</b> <span class="badge badge-pill badge-success float-right">{{ bio.status }}</span>
+                                {% elif bio.status == "Inactive" %}
+                                    <b>Membership Status</b> <span class="badge badge-pill badge-primary float-right">{{ bio.status }}</span>
+                                {% else %}
+                                    <b>Membership Status</b> <span class="badge badge-pill badge-danger float-right">{{ bio.status }}</span>
+                                {% endif %}
+                            </li>
+                         
+                            
+                            <li class="list-group-item">
+                                <a class="btn btn-block btn-outline-primary" href="{% url 'church:update_profile_member' bio.id %}">Update {{ bio.id}}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Change Member Status</b> 
+                                <a class="btn btn-block btn-outline-warning" href="{% url 'church:new_member_status' bio.id %}">New Member</a>
+                                <a class="btn btn-block btn-outline-info" href="{% url 'church:foundationclass_status' bio.id %}">Foundation Class</a>
+                                <a class="btn btn-block btn-outline-success" href="{% url 'church:member_status' bio.id %}">Member</a>
+                                <a class="btn btn-block btn-outline-primary" href="{% url 'church:inactive_status' bio.id %}">Inactive</a>
+                                <a class="btn btn-block btn-outline-danger" href="{% url 'church:deceased_status' bio.id %}">Deceased</a>
+                            </li>
+                           
+                        </ul>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+
+                <!-- About Me Box -->
+                <div class="card card-primary card-outline">
+
+                    <!-- /.card-header -->
+                    <div class="card-body">
+
+                        <strong><i class="fas fa-map-marker-alt mr-1"></i> Location & Address</strong>
+
+                        <p class="text-muted">{{bio.address}}</p>
+
+                        <hr>
+                        <strong><i class="fas fa-phone mr-1"></i>Active Phone Number</strong>
+
+                        <p class="text-muted">{{bio.contact}}</p>
+
+                        <hr>
+                        <strong><i class="fa fa-language mr-1"></i>Email</strong>
+
+                        <p class="text-muted">{{bio.email}}</p>
+
+                        <hr>
+
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+
+            <div class="col-md-9 col-sm-12 novalidate">
+
+                <div class="row">
+                            <div class="col-lg">
+                                <div class="card card-primary card-outline">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Details</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <!-- form start -->
+
+
+                                    <br>
+
+                                   
+                                    {% if baptism %}
+                                    <h3 class="ml-4">Baptism Information<span class="ml-3">
+                                            <a class="btn btn-sm btn-outline-primary " href="{% url 'church:create_profile_baptisms' bio.id %}">Add</a>
+                                        
+                                        </span></h3>
+                                    <div class="m-4">
+                                        <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+
+                                                    <table id="example7" class="table  table-striped table-hover" role="grid"
+                                                        aria-describedby="example2_info">
+                                                        <thead class="">
+                                                            <tr role="row">
+
+                                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                                                    aria-label="Browser: activate to sort column ascending">Where</th>
+
+                                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                                                    aria-label="Browser: activate to sort column ascending">Date of Baptism</th>
+
+                                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                                                    aria-label="CSS grade: activate to sort column ascending">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for a in baptism %}
+
+                                                            <tr role="row" class="odd">
+                                                                <td>{{ a.where}}</td>
+                                                                <td>{{ a.date_of_baptism}}</td>
+                                                                <td>
+                                                                    <a class="btn btn-sm btn-outline-primary"
+                                                                    href="{% url 'church:update_profile_baptism' a.id %}">Update</a>
+                                                                    
+                                                                </td>
+
+
+                                                            </tr>
+
+                                                            {% endfor %}
+
+                                                        </tbody>
+
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                    <div class="m-3">
+                                        <h3 class="ml-3">Baptism Information<span class="ml-3">
+                                            <a class="btn btn-sm btn-outline-primary " href="{% url 'church:create_profile_baptisms' bio.id %}">Add</a>
+                                        
+                                        </span></h3>
+                                        <div class="jumbotron">
+                                            <div class="col-md-10 mx-auto">
+                                              <p class="d-flex justify-content-center"><b>No Baptism Information</b></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    {% if contact %}
+                                    <h3 class="ml-4">Emergency Contact Information <span class="ml-3">
+                                       
+                                            <a class="btn btn-sm btn-outline-primary " href="{% url 'church:create_profile_emmergency_contact' bio.id %}">Add</a>
+
+                                        
+                                        </span></h3>
+                                    <div class="m-4">
+                                        <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+
+                                                    <table id="example3" class="table  table-striped table-hover" role="grid"
+                                                        aria-describedby="example2_info">
+                                                        <thead class="">
+                                                            <tr role="row">
+
+                                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                                                    aria-label="Browser: activate to sort column ascending">Name</th>
+
+                                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                                                    aria-label="Browser: activate to sort column ascending">Contact</th>
+                                                                
+                                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                                                    aria-label="Browser: activate to sort column ascending">Relationship</th>
+                                                                
+                                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                                                    aria-label="Browser: activate to sort column ascending">Specify if Others</th>
+
+                                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                                                    aria-label="CSS grade: activate to sort column ascending">Action</th>
+
+
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for a in contact %}
+
+                                                            <tr role="row" class="odd">
+                                                                <td>{{ a.name}}</td>
+                                                                <td>{{ a.contact}}</td>
+                                                                <td>{{ a.relationship}}</td>
+                                                                <td>{{ a.if_others_specify}}</td>
+                                                                <td>
+                                                                    <a class="btn btn-sm btn-outline-primary"
+                                                                    href="{% url 'church:update_profile_emergency' a.id %}">Update</a>
+                                                                   
+                                                                </td>
+                                                            </tr>
+
+                                                            {% endfor %}
+
+                                                        </tbody>
+
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                    <div class="m-3">
+                                        <h3 class="ml-3">Emergency Contact Information <span class="ml-3">
+                                       
+                                            <a class="btn btn-sm btn-outline-primary " href="{% url 'church:create_profile_emmergency_contact' bio.id %}">Add</a>
+
+                                        
+                                        </span></h3>
+                                        <div class="jumbotron">
+                                            <div class="col-md-10 mx-auto">
+                                              <p class="d-flex justify-content-center"><b>No Emergency Contact Information</b></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+
+                                  
+
+                                </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+</div>
+
+
+
+{% endblock %}

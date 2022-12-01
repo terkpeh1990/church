@@ -1,0 +1,194 @@
+{% load static %}
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Brand Logo -->
+  <a href="{% url 'accounts:dashboard' as dashboard %}" class="brand-link">
+    <img src="{% static 'dist/img/logo6.jpeg' %}" alt="AdminLTE Logo" class="brand-image  elevation-6"
+      style="opacity: .8">
+    <span class="brand-text font-weight-light"> <b>  Smart CHURCH</b> </span>
+  </a>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Add icons to the links using the .nav-icon class
+                with font-awesome or any other icon font library -->
+                {% url 'church:manage_members' as manage_members %}
+                {% url 'accounts:dashboard' as dashboard %}
+       
+                <li class="nav-item 
+                {% if request.path == manage_members %} menu-open {% endif %}
+                {% if request.path == dashboard %} menu-open {% endif %}
+              
+               
+                   ">
+                
+                  <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-anchor"></i>
+                    <p>
+                      Home
+                      <i class="right fas fa-angle-left"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                      {% url 'accounts:dashboard' as dashboard %}
+                      <a href="{{ dashboard }}" class="nav-link {% if request.path == dashboard %} active {% endif %}">
+                        <i class="fas fa-anchor nav-icon "></i>
+                        <p>Dashboard</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      {% url 'church:manage_members' as manage_members %}
+                      <a href="{{ manage_members }}" class="nav-link {% if request.path == manage_members %} active {% endif %}">
+                        <i class="fas fa-users nav-icon "></i>
+                        <p>Members</p>
+                      </a>
+                    </li>
+                    
+                   
+                  </ul>
+                </li>
+             
+
+       
+
+        {% url 'accounts:manage_accounts' as manage_accounts %}
+        {% url 'accounts:general_ledger' as general_ledger %}
+        {% url 'accounts:manage_pv' as manage_pv %}
+        {% url 'accounts:manage_payables' as manage_payables %}
+        {% url 'accounts:create_offering' as create_offering %}
+        {% url 'accounts:manage_receivables' as manage_receivables %}
+        {% url 'accounts:manage_pledges' as manage_pledges %}
+        {% url 'accounts:add_walfare' as add_walfare %}
+        {% url 'accounts:approve_walfare' a.id as approve_walfare %}
+        {% url 'accounts:cancelled_walfare' a.id as cancelled_walfare %}
+        {% url 'accounts:manage_transfer'  as manage_transfer %}
+        {% url 'accounts:add_tithe'  as add_tithe %}
+       
+        <li class="nav-item 
+        {% if request.path == manage_accounts %} menu-open {% endif %}
+        {% if request.path == manage_pv %} menu-open {% endif %} 
+        {% if request.path == general_ledger %} menu-open {% endif %}
+        {% if request.path == manage_payables %} menu-open {% endif %}
+        {% if request.path == create_offering %} menu-open {% endif %}
+        {% if request.path == manage_pledges %} menu-open {% endif %}
+        {% if request.path == add_walfare %} menu-open {% endif %}
+        {% if request.path == approve_walfare %} menu-open {% endif %}
+        {% if request.path == cancelled_walfare %} menu-open {% endif %}
+        {% if request.path == manage_transfer %} menu-open {% endif %}
+        {% if request.path == add_tithe %} menu-open {% endif %}
+           
+           ">
+           <!-- {% url 'accounts:account_dashboards' as account_dashboards %} -->
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-anchor"></i>
+            <p>
+              Accounts
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              {% url 'accounts:manage_accounts' as manage_accounts %}
+              <a href="{{manage_accounts}}" class="nav-link {% if request.path == manage_accounts %} active {% endif %}">
+                <i class="fab fa-accusoft nav-icon"></i>
+                <p>Account Codes</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              {% url 'accounts:manage_pv' as manage_pv %}
+              <a href="{{ manage_pv }}" class="nav-link {% if request.path == manage_pv %} active {% endif %}">
+                <i class="fas fa-balance-scale nav-icon"></i>
+                <p>Payment Voucher </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              {% url 'accounts:general_ledger' as general_ledger %}
+              <a href="{{ general_ledger }}" class="nav-link {% if request.path == general_ledger  %} active {% endif %}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>General Ledger</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              {% url 'accounts:manage_payables' as manage_payables %}
+              <a href="{{ manage_payables }}" class="nav-link {% if request.path == manage_payables %} active {% endif %}">
+                <i class="fab fa-btc nav-icon"></i>
+                <p>Payables</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              {% url 'accounts:create_offering' as create_offering %}
+              <a href="{{ create_offering }}" class="nav-link {% if request.path == create_offering %} active {% endif %}">
+                <i class="fab fa-btc nav-icon"></i>
+                <p>Offerings</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              {% url 'accounts:manage_pledges' as manage_pledges %}
+              <a href="{{ manage_pledges }}" class="nav-link {% if request.path == manage_pledges %} active {% endif %}">
+                <i class="fab fa-btc nav-icon"></i>
+                <p>Pledges</p>
+              </a>
+            </li> 
+            <li class="nav-item">
+              {% url 'accounts:add_walfare' as add_walfare %}
+              <a href="{{ add_walfare }}" class="nav-link {% if request.path == add_walfare %} active {% endif %}">
+                <i class="fab fa-btc nav-icon"></i>
+                <p>Walfare</p>
+              </a>
+            </li> 
+            <li class="nav-item">
+              {% url 'accounts:manage_transfer' as manage_transfer %}
+              <a href="{{ manage_transfer }}" class="nav-link {% if request.path == manage_transfer %} active {% endif %}">
+                <i class="fab fa-btc nav-icon"></i>
+                <p>Transfer</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              {% url 'accounts:add_tithe'  as add_tithe %}
+              <a href="{{ add_tithe }}" class="nav-link {% if request.path == add_tithe %} active {% endif %}">
+                <i class="fab fa-btc nav-icon"></i>
+                <p>Tithe</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        {% url 'accounts:accounting_year' as accounting_year %}
+       
+        <li class="nav-item 
+        {% if request.path == accounting_year %} menu-open {% endif %}
+      
+       
+           ">
+        
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-anchor"></i>
+            <p>
+              Configuration
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              {% url 'accounts:accounting_year' as accounting_year %}
+              <a href="{{ accounting_year }}" class="nav-link {% if request.path == accounting_year %} active {% endif %}">
+                <i class="fab fa-accusoft nav-icon"></i>
+                <p>Accounting Year</p>
+              </a>
+            </li>
+           
+           
+           
+          </ul>
+        </li>
+        <br>
+        <hr>
+      </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>

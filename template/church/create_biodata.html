@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block head %}
+   Add New Member
+{% endblock head %}
+
+{% block breadcrumb %}
+      
+    <li class="breadcrumb-item"><a href="#">Home</a></li>
+    
+    <li class="breadcrumb-item"><a href="{% url 'church:manage_members' %}">Members</a></li>
+    <li class="breadcrumb-item active">Add New</li>
+{% endblock breadcrumb %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg">
+        <div class="card  card-primary card-outline p-4 m-4">
+            
+            <form role="form" method="POST" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                <div class="card-body">
+                    <div class="row">
+                        <div class="form-group col-12 col-sm-12 col-md-4">
+                            
+                            {{ form.tile|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-12 col-sm-12 col-md-4">
+                            
+                            {{ form.surname|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-12 col-sm-12 col-md-4">
+                          
+                            {{ form.first_name|as_crispy_field }}
+                        </div>
+
+                        
+                    </div>
+                    <div class="row">
+
+                        <div class="form-group col-12 col-sm-12 col-md-4">
+
+                            {{ form.dob|as_crispy_field }}
+                        </div>
+                         <div class="form-group col-12 col-sm-12 col-md-4">
+
+                            {{ form.gender|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-12 col-sm-12 col-md-4">
+
+                            {{ form.marital_status|as_crispy_field }}
+                        </div>
+
+                    </div>
+                    <div class="row">
+
+                        <div class="form-group col-12 col-sm-12 col-md-6">
+                            
+                            {{ form.contact|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-12 col-sm-12 col-md-6">
+                            
+                            {{ form.email|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        
+                        <div class="form-group col-12 col-sm-12 col-md-6">
+                           
+                            {{ form.address|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-12 col-sm-12 col-md-6">
+                           
+                            {{ form.profile_picture|as_crispy_field }}
+                        </div>
+                        
+
+                        
+                    </div>
+                    
+                    <div class="ml-2 p-3 mt-5 d-flex justify-content-end">
+                        <button id="next-page-btn" class="btn  btn-outline-primary  px-4 btn-large"><span class="px-2">Save</span><i class="fas fa-arrow-right pr-1"></i></button>
+                        
+                      
+                      </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div> 
+{% endblock %}

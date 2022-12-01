@@ -1,0 +1,294 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class='row'>
+    <div class="col-md-3 col-sm-12">
+    
+        <!-- Profile Image -->
+        <div class="card card-dark card-outline">
+            <div class="card-body box-profile">
+                <div class="text-center mb-2">
+                    <img class="profile-user-img img-fluid img-circle" src="{% static 'dist/img/logo6.jpeg' %}"
+                        alt="User profile picture">
+                </div>
+               
+    
+                {% comment %} <h3 class="profile-username text-center">{{{ pledge.description }}</h3> {% endcomment %}
+                <ul class="list-group list-group-unbordered mb-3">
+                    <li class="list-group-item">
+                        <b>Code</b> <a class="float-right">{{pledge.sub_code}}</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Discription</b> <a class="float-right">{{pledge.description}}</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Total </b> <a class="float-right">{{pledge.amount}}</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Redeemed </b> <a class="float-right">{{pledge.amount_paid}}</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Balance </b> <a class="float-right">{{pledge.balance}}</a>
+                    </li>
+                    <li class="list-group-item">
+                        {% if pledge.status == "pending" %}
+                            <b>Status </b> <a class="float-right"><span class="badge badge-pill badge-warning">{{pledge.status}}</span></a>
+                        {% elif pledge.status == "approved" %}
+                            <b>Status </b> <a class="float-right"><span class="badge badge-pill badge-info">{{pledge.status}}</span></a>
+                        {% else %}
+                            <b>Status </b> <a class="float-right"><span class="badge badge-pill badge-info">{{pledge.status}}</span></a>
+                        {% endif %}
+                    </li>
+                    {% if pledge.status == "pending" %}
+                        <li class="list-group-item">
+                            <a class="btn btn-block btn-outline-primary" href="{% url 'accounts:approve_pledge' pledge.id %}">Approve Pledge</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a class="btn btn-block btn-outline-danger" href="{% url 'accounts:cancelled_pledge' pledge.id %}">Cancel Pledge</a>
+                        </li>
+                    {% else %}
+                    {% endif %}
+
+                </ul>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    
+       
+       
+    </div>
+    <div class="col-md-9 col-sm-12 novalidate">
+        
+        <div class="row">
+                    <div class="col-lg">
+                        <div class="card card-dark card-outline">
+                            <div class="card-header">
+                                <h3 class="card-title">{{pledge.description}}</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+                            <form role="form" method="POST" enctype="multipart/form-data" novalidate>
+                                {% csrf_token %}
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="form-group  col-12 col-md-8">
+                                            <label for="">Church Member </label>
+                                            <input type="text" name='pledge' value="{{pledge_details.member.name}}" list="productlist" Placeholder="Search for Member.." class="form-control" required >
+                                            <datalist id="productlist">
+                                                {% for item in people %}
+                                                       <option value="{{item.name}}">
+                                                {% endfor %}
+                                            </datalist>
+                                        </div>
+                                        <div class="form-group col-12 col-sm-12 col-md-4">
+                                            <label for="">Amount </label>
+                                            {{ form.amount|as_crispy_field }}
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                    
+                                    
+                                    <div class="row">
+                                        <div class="form-group col">
+                                            <button type="submit" class="btn btn-outline-dark btn-sm">Submit</button>
+                                        </div>
+                                        <div class="form-group col ">
+                                        </div>
+                                        <div class="form-group col ">
+                                        </div>
+                                        <div class="form-group col ">
+                                        </div>
+                                        <div class="form-group col ">
+                                        </div>
+                                        <div class="form-group col ">
+                                        </div>
+                                        <div class="form-group col ">
+                                        </div>
+                                        <div class="form-group col ">
+                                        </div>
+                                        <div class="form-group col ">
+                                        </div>
+                                        <div class="form-group col float-left">
+                                           
+                                         <a class="btn btn-outline-dark btn-sm"href="{% url 'accounts:manage_pledges' %}"><i class="fas fa-arrow-left"></i></a>
+                                           
+                                         
+                                        </div>
+                                        
+                                    </div>
+                                </div> 
+                                
+                                    
+                            </form>
+
+                            <br>
+                            
+                            {% if detail %}
+                            <div class="m-4">
+                                <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table id="example2" class="table   table-hover" role="grid"
+                                                aria-describedby="example2_info">
+                                                <thead class="">
+                                                    <tr role="row">
+                    
+                                                        
+                                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                                            aria-label="Browser: activate to sort column ascending">ID</th>
+                                                        
+                                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                                            aria-label="Browser: activate to sort column ascending">Name</th>
+                                                        
+                                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                                            aria-label="Browser: activate to sort column ascending">Amount</th>
+                                                        
+                                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                                            aria-label="Browser: activate to sort column ascending">Redeemed</th>
+                                                        
+                                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                                            aria-label="Browser: activate to sort column ascending">Balance</th>
+                                                        
+                                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                                            aria-label="CSS grade: activate to sort column ascending">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for a in detail %}
+                                                    </tr>
+                                                    <tr role="row" class="odd">
+                                                        <td>{{ a.id}}</td>
+                                                        <td>
+                                                            
+                                                            {{ a.member.name }}
+                                                        </td>
+                                                        <td>{{ a.amount}}</td>
+                                                        <td>{{ a.amount_paid }}</td>
+                                                        <td>{{ a.balance}}</td>
+                                                       
+                                                        <td>
+
+                                                        {% if pledge.status == "pending"  %}
+                                                            <a class="btn btn-sm btn-outline-danger"
+                                                                href="{% url 'accounts:deletes_pledge' a.id %}">Remove</a>
+                                                        {% endif %}
+                                                         {% if pledge.status == "approved"  and a.balance > 0.00 %}
+                                                            <a class="btn btn-sm btn-outline-primary"
+                                                                href="{% url 'accounts:plege_payment' a.id %}">Redeem Pledge</a>
+                                                        {% endif %}
+
+                                                        </td>
+                                                    </tr>
+                    
+                                                    {% endfor %}
+                    
+                                                </tbody>
+                    
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="m-4">
+                                <div class="jumbotron">
+                                    <div class="col-md-10 mx-auto">
+                                      <p class="d-flex justify-content-center"><b>No Pledge Information</b></p>
+                                    </div>
+                                </div> 
+                            </div>  
+                            {% endif %}
+
+                            <br>
+                            <br>
+                            {% if general_ledger %}
+                            <div class='m-4'>
+                                <h5>Pledge Reference In General Ledger </h5>
+                            <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12">
+                                        
+                                        <table  class="table table-striped  table-sm" role="grid"
+                                            aria-describedby="example2_info">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>REF</th>
+                                                    <th>Date</th>
+                                                    <th>Sub Code</th>
+                                                    <th>Description</th>
+                                                    <th>DR   (GH&#8373)</th>
+                                                    <th>CR   (GH&#8373)</th>
+                                                
+                                                    <th>Created By</th>
+        
+                                                    
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for item in general_ledger %}
+                                                <tr>
+                                                    <td>{{item.id}}</td>
+                                                    <td>{{item.transactionref}}</td>
+                                                    <td>{{item.transaction_date}}</td>
+                                                    <td>{{item.sub_code.sub_code }} -- {{item.sub_code.sub_description}} </td>
+                                                    <td>{{item.description}}</td>
+                                                    
+                                                    <td>
+                                                        {% if item.debit > 0 %}
+                                                        GH&#8373 {{item.debit}} 
+                                                        {% else %}
+        
+                                                        {% endif %}
+                                                    
+                                                    </td>
+                                                    <td>
+                                                        {% if item.cedit > 0 %}
+                                                        GH&#8373 {{item.cedit}} 
+                                                        {% else %}
+                                                            
+                                                        {% endif %}
+                                                        
+                                                    </td>
+                                                    
+                                                    <td>{{item.created_by}} -- {{item.created_by.first_name}}</td>
+                                                
+        
+                                                </tr>
+                                                {% endfor %}
+                                               
+                                            </tbody>
+                
+                                        </table>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            </div>
+                            {% else %}
+                            <div class=" m-4 jumbotron">
+                                <div class="col-md-10 mx-auto">
+                                <p class="d-flex justify-content-center"><b>No Ledger Transaction</b></p>
+                                </div>
+                            </div>  
+                            {% endif %}
+                                
+                            
+                        </div>
+                   </div>           
+    
+        </div>
+    
+    </div>
+
+</div>
+{% endblock %}
+
+
+
